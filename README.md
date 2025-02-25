@@ -30,6 +30,3 @@ shell
 npm start
 
 Screenshots:
-
-image.png
-image.png
