@@ -3,7 +3,7 @@ Highlights:
 - 🌟 Tech stack: MERN + Socket.io + TailwindCSS + Daisy UI
 - 🎃 Authentication && Authorization with JWT
 - 👾 Real-time messaging with Socket.io
-- 🚀 Online user status
+- 🚀 Online user status. When one user goes offline then the other user sees ‘the user is offline’ and when the user starts typing then it shows a message in chat ‘user is typing’.
 - 👌 Global state management with Zustand
 - 🐞 Error handling both on the server and on the client
 
