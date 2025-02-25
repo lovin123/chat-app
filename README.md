@@ -23,7 +23,7 @@ npm run build
 
 ### Start the app
 
-npm start
+npm run start
 
 ### Screenshots:
 
