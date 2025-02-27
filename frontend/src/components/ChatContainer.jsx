@@ -25,7 +25,12 @@ const ChatContainer = () => {
     subscribeToMessages();
 
     return () => unsubscribeFromMessages();
-  }, [selectedUser._id, getMessages, subscribeToMessages, unsubscribeFromMessages]);
+  }, [
+    selectedUser._id,
+    getMessages,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+  ]);
 
   useEffect(() => {
     if (messageEndRef.current && messages) {
@@ -51,10 +56,12 @@ const ChatContainer = () => {
         {messages.map((message) => (
           <div
             key={message._id}
-            className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
+            className={`chat ${
+              message.senderId === authUser._id ? "chat-end" : "chat-start"
+            }`}
             ref={messageEndRef}
           >
-            <div className=" chat-image avatar">
+            <div className="chat-image avatar">
               <div className="size-10 rounded-full border">
                 <img
                   src={

@@ -10,6 +10,14 @@ export const useChatStore = create((set, get) => ({
   isUsersLoading: false,
   isMessagesLoading: false,
   typingUsers: new Set(),
+  search: "",
+  setSearch: (search) => {
+    set({ search });
+    const { selectedUser } = get();
+    if (selectedUser) {
+      get().getMessages(selectedUser._id);
+    }
+  },
 
   getUsers: async () => {
     set({ isUsersLoading: true });
@@ -26,7 +34,9 @@ export const useChatStore = create((set, get) => ({
   getMessages: async (userId) => {
     set({ isMessagesLoading: true });
     try {
-      const res = await axiosInstance.get(`/messages/${userId}`);
+      const { search } = get();
+      const queryParams = search ? `?search=${encodeURIComponent(search)}` : "";
+      const res = await axiosInstance.get(`/messages/${userId}${queryParams}`);
       set({ messages: res.data });
     } catch (error) {
       toast.error(error.response.data.message);

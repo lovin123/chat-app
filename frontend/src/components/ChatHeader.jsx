@@ -1,10 +1,28 @@
 import { X } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
+import { useCallback } from "react";
+import debounce from "lodash/debounce";
 
 const ChatHeader = () => {
-  const { selectedUser, setSelectedUser } = useChatStore();
+  const { selectedUser, setSelectedUser, search, setSearch } = useChatStore();
   const { onlineUsers } = useAuthStore();
+
+  // Debounce the search function
+  const debouncedSearch = useCallback(
+    debounce((value) => {
+      setSearch(value);
+    }, 500),
+    []
+  );
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    // Update the input value immediately for UI responsiveness
+    e.target.value = value;
+    // Debounce the actual search
+    debouncedSearch(value);
+  };
 
   return (
     <div className="p-2.5 border-b border-base-300">
@@ -13,7 +31,10 @@ const ChatHeader = () => {
           {/* Avatar */}
           <div className="avatar">
             <div className="size-10 rounded-full relative">
-              <img src={selectedUser.profilePic || "/avatar.png"} alt={selectedUser.fullName} />
+              <img
+                src={selectedUser.profilePic || "/avatar.png"}
+                alt={selectedUser.fullName}
+              />
             </div>
           </div>
 
@@ -25,6 +46,13 @@ const ChatHeader = () => {
             </p>
           </div>
         </div>
+        <input
+          type="text"
+          placeholder="Search messages..."
+          className="input input-bordered input-sm w-48"
+          defaultValue={search}
+          onChange={handleSearchChange}
+        />
 
         {/* Close button */}
         <button onClick={() => setSelectedUser(null)}>
